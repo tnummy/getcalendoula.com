@@ -194,7 +194,8 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    .form-extra input,
+    .form-extra input[type="tel"],
+    .form-extra input[type="text"],
     .form-extra textarea {
       padding: 0.8rem 1.1rem;
       border: 1.5px solid #d0c4b4;
@@ -208,10 +209,12 @@
       transition: border-color 0.2s;
     }
 
-    .form-extra input:focus,
+    .form-extra input[type="tel"]:focus,
+    .form-extra input[type="text"]:focus,
     .form-extra textarea:focus { border-color: var(--warm); }
 
-    .form-extra input::placeholder,
+    .form-extra input[type="tel"]::placeholder,
+    .form-extra input[type="text"]::placeholder,
     .form-extra textarea::placeholder { color: #b0a393; }
 
     .form-extra textarea {
