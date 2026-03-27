@@ -3,82 +3,419 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Calendoula — Spa & Wellness Management</title>
-  <link rel="icon" type="image/png" href="/logo.png">
+  <title>Calendoula — The All-in-One Platform for Spa & Wellness</title>
+  <meta name="description" content="Scheduling, POS, CRM, marketing, staff management, automations, and AI insights — everything to run your spa or wellness business. Launching soon.">
+  <link rel="icon" type="image/png" href="logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Cormorant+Garamond:wght@600;700&display=swap" rel="stylesheet">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --warm: #b8623e;
+      --warm-soft: rgba(184, 98, 62, 0.08);
+      --teal: #4a9b8f;
+      --teal-soft: rgba(74, 155, 143, 0.08);
+      --gold: #c4956a;
+      --text: #2c2418;
+      --text-mid: #5a4d3f;
+      --text-light: #9a8d7f;
+      --glass: rgba(255,255,255,0.55);
+      --glass-border: rgba(255,255,255,0.35);
+    }
+
     body {
-      min-height: 100vh;
+      font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: var(--text);
+      height: 100vh;
+      overflow: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Full-viewport canvas ── */
+    .canvas {
+      height: 100vh;
+      width: 100vw;
+      position: relative;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr auto;
+      overflow: hidden;
+    }
+
+    /* ── Animated background ── */
+    .bg {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      background: linear-gradient(145deg, #fdf8f2 0%, #f2e8da 30%, #e6dcd0 55%, #ddd4c8 100%);
+    }
+
+    .bg .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      animation: drift 20s ease-in-out infinite alternate;
+    }
+
+    .bg .orb-1 {
+      width: 600px; height: 600px;
+      top: -15%; right: -8%;
+      background: radial-gradient(circle, rgba(184,98,62,0.12) 0%, transparent 70%);
+    }
+
+    .bg .orb-2 {
+      width: 500px; height: 500px;
+      bottom: -10%; left: -5%;
+      background: radial-gradient(circle, rgba(74,155,143,0.1) 0%, transparent 70%);
+      animation-delay: -7s;
+      animation-duration: 25s;
+    }
+
+    .bg .orb-3 {
+      width: 350px; height: 350px;
+      top: 40%; left: 35%;
+      background: radial-gradient(circle, rgba(196,149,106,0.08) 0%, transparent 70%);
+      animation-delay: -12s;
+      animation-duration: 18s;
+    }
+
+    .bg .mesh {
+      position: absolute;
+      inset: 0;
+      background-image:
+        radial-gradient(circle at 20% 80%, rgba(74,155,143,0.04) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(184,98,62,0.04) 0%, transparent 50%);
+    }
+
+    @keyframes drift {
+      0% { transform: translate(0, 0) scale(1); }
+      100% { transform: translate(30px, -20px) scale(1.05); }
+    }
+
+    /* ── Left column: hero ── */
+    .hero {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 4vh 5vw 4vh 6vw;
+    }
+
+    .logo {
+      width: 72px; height: 72px;
+      border-radius: 50%;
+      filter: drop-shadow(0 3px 12px rgba(0,0,0,0.12));
+      margin-bottom: 1.5rem;
+    }
+
+    h1 {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(2.4rem, 3.5vw, 3.6rem);
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -0.025em;
+      margin-bottom: 1.25rem;
+    }
+
+    h1 em {
+      font-style: normal;
+      background: linear-gradient(135deg, var(--warm), var(--gold));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .subtitle {
+      font-size: clamp(0.95rem, 1.1vw, 1.15rem);
+      color: var(--text-mid);
+      line-height: 1.65;
+      max-width: 420px;
+      margin-bottom: 2rem;
+    }
+
+    /* Email capture */
+    .notify-form {
+      display: flex;
+      gap: 0.5rem;
+      max-width: 400px;
+      margin-bottom: 1rem;
+    }
+
+    .notify-form input {
+      flex: 1;
+      padding: 0.8rem 1.1rem;
+      border: 1.5px solid #d0c4b4;
+      border-radius: 8px;
+      background: var(--glass);
+      backdrop-filter: blur(8px);
+      font-size: 0.9rem;
+      font-family: inherit;
+      color: var(--text);
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .notify-form input:focus { border-color: var(--warm); }
+    .notify-form input::placeholder { color: #b0a393; }
+
+    .notify-form button {
+      padding: 0.8rem 1.4rem;
+      background: linear-gradient(135deg, var(--warm), #a5553a);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.88rem;
+      font-family: inherit;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: transform 0.15s, box-shadow 0.2s;
+      box-shadow: 0 2px 8px rgba(184,98,62,0.25);
+    }
+
+    .notify-form button:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 16px rgba(184,98,62,0.35);
+    }
+
+    .notify-note {
+      font-size: 0.78rem;
+      color: var(--text-light);
+      font-style: italic;
+    }
+
+    .badge-row {
+      display: flex;
+      gap: 0.6rem;
+      margin-top: 2rem;
+    }
+
+    .pill {
+      font-size: 0.7rem;
+      font-weight: 600;
+      padding: 0.35rem 0.85rem;
+      border-radius: 100px;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      border: 1.5px solid;
+    }
+
+    .pill-warm { color: var(--warm); border-color: rgba(184,98,62,0.25); background: var(--warm-soft); }
+    .pill-teal { color: var(--teal); border-color: rgba(74,155,143,0.25); background: var(--teal-soft); }
+
+    /* ── Right column: feature mosaic ── */
+    .mosaic {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: repeat(5, 1fr);
+      gap: 10px;
+      padding: 3vh 4vw 3vh 2vw;
+      align-content: center;
+    }
+
+    .tile {
+      background: var(--glass);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--glass-border);
+      border-radius: 12px;
+      padding: 1rem 1.1rem;
+      transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+      cursor: default;
+      overflow: hidden;
+    }
+
+    .tile:hover {
+      transform: translateY(-2px) scale(1.01);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.06);
+      border-color: rgba(184,98,62,0.2);
+    }
+
+    .tile-icon {
+      font-size: 1.15rem;
+      margin-bottom: 0.4rem;
+    }
+
+    .tile h3 {
+      font-size: 0.82rem;
+      font-weight: 700;
+      margin-bottom: 0.3rem;
+      letter-spacing: -0.01em;
+    }
+
+    .tile p {
+      font-size: 0.72rem;
+      color: var(--text-mid);
+      line-height: 1.45;
+    }
+
+    /* Span tiles for visual rhythm */
+    .tile-wide { grid-column: span 2; }
+
+    .tile-accent {
+      background: linear-gradient(135deg, rgba(74,155,143,0.08), rgba(74,155,143,0.02));
+      border-color: rgba(74,155,143,0.2);
+    }
+
+    .tile-warm-accent {
+      background: linear-gradient(135deg, rgba(184,98,62,0.06), rgba(184,98,62,0.02));
+      border-color: rgba(184,98,62,0.15);
+    }
+
+    /* ── Bottom bar ── */
+    .bottom-bar {
+      grid-column: 1 / -1;
+      position: relative;
+      z-index: 1;
       display: flex;
       align-items: center;
-      justify-content: center;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: linear-gradient(135deg, #fef9f3 0%, #f0e6d8 50%, #e8ddd0 100%);
-      color: #3a3028;
+      justify-content: space-between;
+      padding: 1.25rem 6vw;
+      font-size: 0.78rem;
+      color: var(--text-light);
+      border-top: 1px solid rgba(0,0,0,0.05);
     }
-    .container {
-      text-align: center;
-      padding: 2rem;
-      max-width: 520px;
-    }
-    .logo {
-      width: 120px;
-      height: 120px;
-      margin-bottom: 2rem;
-      filter: drop-shadow(0 4px 12px rgba(0,0,0,0.1));
-    }
-    h1 {
-      font-size: 2.5rem;
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      margin-bottom: 0.5rem;
-      color: #2c2418;
-    }
-    .tagline {
-      font-size: 1.15rem;
-      color: #6b5d4f;
-      margin-bottom: 2.5rem;
-      line-height: 1.5;
-    }
-    .badge {
-      display: inline-block;
-      background: rgba(184, 98, 62, 0.12);
-      color: #b8623e;
-      font-weight: 600;
-      font-size: 0.85rem;
-      padding: 0.5rem 1.25rem;
-      border-radius: 100px;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-    }
-    .divider {
-      width: 48px;
-      height: 2px;
-      background: #c9b8a8;
-      margin: 2rem auto;
-      border-radius: 1px;
-    }
-    .contact {
-      font-size: 0.95rem;
-      color: #8a7b6b;
-    }
-    .contact a {
-      color: #b8623e;
+
+    .bottom-bar a {
+      color: var(--warm);
       text-decoration: none;
     }
-    .contact a:hover {
-      text-decoration: underline;
+
+    .bottom-features {
+      display: flex;
+      gap: 1.5rem;
+      font-size: 0.72rem;
+      color: var(--text-light);
+    }
+
+    .bottom-features span::before {
+      content: '';
+      display: inline-block;
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: var(--teal);
+      margin-right: 0.4rem;
+      vertical-align: middle;
+      opacity: 0.6;
+    }
+
+    /* ── Mobile: stack vertically, allow scroll ── */
+    @media (max-width: 900px) {
+      body { height: auto; overflow: auto; }
+      .canvas {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto auto;
+        height: auto;
+      }
+      .hero { padding: 8vh 2rem 4vh; }
+      .mosaic {
+        padding: 1rem 1.5rem 2rem;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto;
+      }
+      .tile-wide { grid-column: span 2; }
+      .bottom-features { display: none; }
+      .notify-form { max-width: 100%; }
+    }
+
+    @media (max-width: 500px) {
+      .mosaic { grid-template-columns: 1fr; }
+      .tile-wide { grid-column: span 1; }
+      .badge-row { flex-wrap: wrap; }
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <img src="/logo.png" alt="Calendoula" class="logo">
-    <h1>Calendoula</h1>
-    <p class="tagline">The all-in-one platform for spa &amp; wellness businesses. Booking, clients, sales, marketing, and more.</p>
-    <span class="badge">Coming Soon</span>
-    <div class="divider"></div>
-    <p class="contact">Get in touch: <a href="mailto:hello@getcalendoula.com">hello@getcalendoula.com</a></p>
+
+  <!-- Background -->
+  <div class="bg">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+    <div class="mesh"></div>
   </div>
+
+  <div class="canvas">
+
+    <!-- Left: Hero -->
+    <div class="hero">
+      <img src="logo.png" alt="Calendoula" class="logo">
+      <h1>Everything to run<br>your spa. <em>One&nbsp;platform.</em></h1>
+      <p class="subtitle">Scheduling, client management, point of sale, marketing, staff tools, automations, and AI-powered insights — purpose-built for spas and wellness businesses.</p>
+      <form class="notify-form" onsubmit="return false;">
+        <input type="email" placeholder="you@yourspa.com" required>
+        <button type="submit">Notify Me</button>
+      </form>
+      <p class="notify-note">Be first in line. Launching soon.</p>
+      <div class="badge-row">
+        <span class="pill pill-warm">50+ Features</span>
+        <span class="pill pill-teal">AI-Powered</span>
+        <span class="pill pill-warm">Multi-Location</span>
+      </div>
+    </div>
+
+    <!-- Right: Feature mosaic -->
+    <div class="mosaic">
+      <div class="tile">
+        <div class="tile-icon">&#x1f4c5;</div>
+        <h3>Smart Scheduling</h3>
+        <p>Online booking, recurring series, waitlists, multi-staff, and resource management.</p>
+      </div>
+      <div class="tile tile-accent">
+        <div class="tile-icon">&#x1f465;</div>
+        <h3>Client CRM &amp; Portal</h3>
+        <p>Full profiles, account balances, intake forms, referrals, and self-service portal.</p>
+      </div>
+      <div class="tile tile-warm-accent tile-wide">
+        <div class="tile-icon">&#x1f916;</div>
+        <h3>AI-Powered Insights</h3>
+        <p>13 analysis types: scheduling advice, churn prediction, staff coaching, cancellation patterns, revenue forecasting, and natural language booking.</p>
+      </div>
+      <div class="tile">
+        <div class="tile-icon">&#x1f4b3;</div>
+        <h3>Point of Sale</h3>
+        <p>Services, products, gift cards, packages, memberships, tips, and mobile checkout links.</p>
+      </div>
+      <div class="tile tile-accent">
+        <div class="tile-icon">&#x1f4e7;</div>
+        <h3>Marketing &amp; Automations</h3>
+        <p>Email/SMS campaigns, 19 automation triggers, audience segmentation, and webhooks.</p>
+      </div>
+      <div class="tile tile-warm-accent">
+        <div class="tile-icon">&#x1f464;</div>
+        <h3>Staff Management</h3>
+        <p>Permissions, time clock, payroll, flex schedules, time off, documents, and org chart.</p>
+      </div>
+      <div class="tile tile-accent">
+        <div class="tile-icon">&#x1f4ca;</div>
+        <h3>50+ Reports</h3>
+        <p>Visual dashboards, 17 report sections, trend analysis, and CSV exports.</p>
+      </div>
+      <div class="tile tile-wide">
+        <div class="tile-icon">&#x1f381;</div>
+        <h3>Gift Cards, Packages &amp; Memberships</h3>
+        <p>Seasonal promotions, redemption tracking, recurring billing, and a full product &amp; inventory system with supplier management and AI invoice parsing.</p>
+      </div>
+    </div>
+
+    <!-- Bottom bar -->
+    <div class="bottom-bar">
+      <span>&copy; 2026 Calendoula &middot; <a href="mailto:hello@getcalendoula.com">hello@getcalendoula.com</a></span>
+      <div class="bottom-features">
+        <span>Team Chat</span>
+        <span>Training Mode</span>
+        <span>Accessibility</span>
+        <span>Spotify Integration</span>
+        <span>Landing Page Builder</span>
+        <span>Form Builder</span>
+        <span>Activity Log</span>
+      </div>
+    </div>
+
+  </div>
+
 </body>
 </html>
