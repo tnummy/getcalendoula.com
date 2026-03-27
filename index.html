@@ -412,18 +412,10 @@
     }
 
     .disclaimer {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      z-index: 2;
-      text-align: center;
-      font-size: 0.65rem;
+      font-size: 0.72rem;
       color: #a09888;
-      padding: 0.6rem 2rem;
-      background: rgba(245,237,227,0.85);
-      backdrop-filter: blur(6px);
       line-height: 1.5;
+      margin-top: 0.5rem;
     }
 
     /* ── Mobile: stack vertically, allow scroll ── */
@@ -544,12 +536,13 @@
 
     <!-- Bottom bar -->
     <div class="bottom-bar">
-      <span>&copy; 2026 Calendoula</span>
+      <div>
+        <span>&copy; 2026 Calendoula</span>
+        <p class="disclaimer">* Your info will not be sold or shared. $5/mo pricing is invite-only and guaranteed for 12 months. Final pricing has not been determined but will be tier and feature-set based, and significantly less than competitive alternatives.</p>
+      </div>
     </div>
 
   </div>
-
-  <p class="disclaimer">* Your info will not be sold or shared. $5/mo pricing is invite-only and guaranteed for 12 months. Final pricing has not been determined but will be tier and feature-set based, and significantly less than competitive alternatives.</p>
 
   <script>
     document.getElementById('interest-form').addEventListener('submit', async function(e) {
