@@ -411,6 +411,21 @@
       opacity: 0.6;
     }
 
+    .disclaimer {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 2;
+      text-align: center;
+      font-size: 0.65rem;
+      color: #a09888;
+      padding: 0.6rem 2rem;
+      background: rgba(245,237,227,0.85);
+      backdrop-filter: blur(6px);
+      line-height: 1.5;
+    }
+
     /* ── Mobile: stack vertically, allow scroll ── */
     @media (max-width: 900px) {
       body { height: auto; overflow: auto; }
@@ -451,7 +466,7 @@
       <img src="logo_full.png" alt="Calendoula" class="logo-full">
       <h1>Spa software. <em>Built by someone who actually runs&nbsp;one.</em></h1>
       <p class="subtitle">Scheduling, client management, point of sale, marketing, staff tools, automations, and AI-powered insights — purpose-built for spas and wellness businesses.</p>
-      <p class="notify-note">Invite only. <strong>$5/mo.</strong> Interested? Submit your info.</p>
+      <p class="notify-note">Invite only. <strong>$5/mo.*</strong> Interested? Submit your info.*</p>
       <form class="notify-form" id="interest-form">
         <input type="text" name="name" placeholder="Your name" required>
         <input type="email" name="email" placeholder="you@yourspa.com" required>
@@ -533,6 +548,8 @@
     </div>
 
   </div>
+
+  <p class="disclaimer">* Your info will not be sold or shared. $5/mo pricing is invite-only and guaranteed for 12 months. Final pricing has not been determined but will be tier and feature-set based, and significantly less than competitive alternatives.</p>
 
   <script>
     document.getElementById('interest-form').addEventListener('submit', async function(e) {
