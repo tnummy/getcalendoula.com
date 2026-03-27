@@ -219,6 +219,22 @@
       min-height: 56px;
     }
 
+    .optin-label {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.82rem;
+      color: var(--text-mid);
+      cursor: pointer;
+    }
+
+    .optin-label input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      accent-color: var(--teal);
+      cursor: pointer;
+    }
+
     .field-error {
       border-color: #c0392b !important;
     }
@@ -529,6 +545,10 @@
         <div class="form-extra" id="form-extra">
           <input type="tel" name="phone" placeholder="Phone number (optional)">
           <textarea name="notes" placeholder="Tell us why you're interested (optional)" rows="2"></textarea>
+          <label class="optin-label">
+            <input type="checkbox" name="optin" checked>
+            <span>Send me updates about Calendoula</span>
+          </label>
         </div>
       </form>
       <p class="form-status" id="form-status"></p>
@@ -644,6 +664,7 @@
       const email = this.querySelector('[name="email"]').value.trim();
       const phone = this.querySelector('[name="phone"]').value.trim();
       const notes = this.querySelector('[name="notes"]').value.trim();
+      const optin = this.querySelector('[name="optin"]').checked;
 
       // Clear previous errors
       this.querySelectorAll('.field-error').forEach(el => el.classList.remove('field-error'));
@@ -677,7 +698,7 @@
         const resp = await fetch('https://api.mycalendoula.com/platform/api/v1/interest/', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ name, email, phone: cleanPhone(phone), notes }),
+          body: JSON.stringify({ name, email, phone: cleanPhone(phone), notes, optin }),
         });
         if (resp.ok) {
           status.textContent = 'Thanks! We\'ll be in touch soon.';
