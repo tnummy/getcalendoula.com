@@ -48,44 +48,53 @@
       position: fixed;
       inset: 0;
       z-index: 0;
-      background: linear-gradient(145deg, #fdf8f2 0%, #f2e8da 30%, #e6dcd0 55%, #ddd4c8 100%);
+      background: linear-gradient(155deg, #e8f2ef 0%, #d4e8e3 20%, #c8ddd7 40%, #e2ddd5 65%, #ede6dc 100%);
     }
 
     .bg .orb {
       position: absolute;
       border-radius: 50%;
-      filter: blur(80px);
+      filter: blur(90px);
       animation: drift 20s ease-in-out infinite alternate;
     }
 
     .bg .orb-1 {
-      width: 600px; height: 600px;
-      top: -15%; right: -8%;
-      background: radial-gradient(circle, rgba(184,98,62,0.12) 0%, transparent 70%);
+      width: 800px; height: 800px;
+      top: -25%; right: -15%;
+      background: radial-gradient(circle, rgba(74,155,143,0.25) 0%, rgba(58,132,120,0.08) 40%, transparent 70%);
     }
 
     .bg .orb-2 {
-      width: 500px; height: 500px;
-      bottom: -10%; left: -5%;
-      background: radial-gradient(circle, rgba(74,155,143,0.1) 0%, transparent 70%);
+      width: 650px; height: 650px;
+      bottom: -20%; left: -10%;
+      background: radial-gradient(circle, rgba(74,155,143,0.2) 0%, rgba(74,155,143,0.05) 50%, transparent 70%);
       animation-delay: -7s;
       animation-duration: 25s;
     }
 
     .bg .orb-3 {
-      width: 350px; height: 350px;
-      top: 40%; left: 35%;
-      background: radial-gradient(circle, rgba(196,149,106,0.08) 0%, transparent 70%);
+      width: 500px; height: 500px;
+      top: 15%; left: 40%;
+      background: radial-gradient(circle, rgba(74,155,143,0.12) 0%, transparent 65%);
       animation-delay: -12s;
       animation-duration: 18s;
+    }
+
+    .bg .orb-4 {
+      width: 350px; height: 350px;
+      top: 60%; right: 20%;
+      background: radial-gradient(circle, rgba(184,98,62,0.08) 0%, transparent 65%);
+      animation-delay: -4s;
+      animation-duration: 22s;
     }
 
     .bg .mesh {
       position: absolute;
       inset: 0;
       background-image:
-        radial-gradient(circle at 20% 80%, rgba(74,155,143,0.04) 0%, transparent 50%),
-        radial-gradient(circle at 80% 20%, rgba(184,98,62,0.04) 0%, transparent 50%);
+        radial-gradient(circle at 15% 30%, rgba(74,155,143,0.08) 0%, transparent 45%),
+        radial-gradient(circle at 70% 70%, rgba(74,155,143,0.06) 0%, transparent 40%),
+        radial-gradient(circle at 85% 15%, rgba(184,98,62,0.04) 0%, transparent 40%);
     }
 
     @keyframes drift {
@@ -100,7 +109,7 @@
       display: flex;
       flex-direction: column;
       justify-content: center;
-      padding: 4vh 5vw 4vh 6vw;
+      padding: 4vh 2vw 4vh 6vw;
     }
 
     .logo {
@@ -139,8 +148,8 @@
     .notify-form {
       display: flex;
       gap: 0.5rem;
-      max-width: 400px;
-      margin-bottom: 1rem;
+      max-width: 460px;
+      margin-bottom: 0.25rem;
     }
 
     .notify-form input {
@@ -181,10 +190,23 @@
     }
 
     .notify-note {
-      font-size: 0.78rem;
-      color: var(--text-light);
-      font-style: italic;
+      font-size: 0.85rem;
+      color: var(--text-mid);
+      margin-bottom: 0.75rem;
     }
+
+    .notify-note strong {
+      color: var(--warm);
+    }
+
+    .form-status {
+      font-size: 0.8rem;
+      margin-top: 0.5rem;
+      min-height: 1.2em;
+    }
+
+    .form-status.success { color: var(--teal); font-weight: 600; }
+    .form-status.error { color: #c0392b; }
 
     .badge-row {
       display: flex;
@@ -205,65 +227,139 @@
     .pill-warm { color: var(--warm); border-color: rgba(184,98,62,0.25); background: var(--warm-soft); }
     .pill-teal { color: var(--teal); border-color: rgba(74,155,143,0.25); background: var(--teal-soft); }
 
-    /* ── Right column: feature mosaic ── */
-    .mosaic {
+    /* ── Right column: feature cloud ── */
+    .features {
       position: relative;
       z-index: 1;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      grid-template-rows: repeat(5, 1fr);
-      gap: 10px;
-      padding: 3vh 4vw 3vh 2vw;
-      align-content: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 4vh 4vw 4vh 2vw;
+      gap: 2rem;
     }
 
-    .tile {
-      background: var(--glass);
+    .feat-cluster {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: flex-start;
+    }
+
+    .feat-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.55rem 1rem;
+      border-radius: 100px;
+      font-size: 0.78rem;
+      font-weight: 500;
       backdrop-filter: blur(12px);
-      border: 1px solid var(--glass-border);
-      border-radius: 12px;
-      padding: 1rem 1.1rem;
-      transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+      border: 1.5px solid;
+      transition: transform 0.25s cubic-bezier(.2,.8,.3,1), box-shadow 0.25s, border-color 0.25s;
       cursor: default;
-      overflow: hidden;
+      white-space: nowrap;
     }
 
-    .tile:hover {
-      transform: translateY(-2px) scale(1.01);
-      box-shadow: 0 8px 32px rgba(0,0,0,0.06);
+    .feat-chip:hover {
+      transform: translateY(-2px) scale(1.04);
+    }
+
+    .feat-chip .chip-icon { font-size: 0.9rem; }
+
+    /* Chip styles */
+    .chip-teal {
+      background: rgba(74,155,143,0.12);
+      border-color: rgba(74,155,143,0.25);
+      color: #2d7a6f;
+    }
+    .chip-teal:hover { border-color: rgba(74,155,143,0.5); box-shadow: 0 6px 20px rgba(74,155,143,0.12); }
+
+    .chip-warm {
+      background: rgba(184,98,62,0.1);
       border-color: rgba(184,98,62,0.2);
+      color: #9a4e2d;
     }
+    .chip-warm:hover { border-color: rgba(184,98,62,0.4); box-shadow: 0 6px 20px rgba(184,98,62,0.1); }
 
-    .tile-icon {
-      font-size: 1.15rem;
-      margin-bottom: 0.4rem;
-    }
-
-    .tile h3 {
-      font-size: 0.82rem;
-      font-weight: 700;
-      margin-bottom: 0.3rem;
-      letter-spacing: -0.01em;
-    }
-
-    .tile p {
-      font-size: 0.72rem;
+    .chip-glass {
+      background: rgba(255,255,255,0.45);
+      border-color: rgba(255,255,255,0.5);
       color: var(--text-mid);
+    }
+    .chip-glass:hover { border-color: rgba(74,155,143,0.3); box-shadow: 0 6px 20px rgba(0,0,0,0.05); }
+
+    .chip-dark {
+      background: linear-gradient(135deg, #2c3e3a, #1e2d29);
+      border-color: rgba(74,155,143,0.35);
+      color: #a8ddd4;
+    }
+    .chip-dark:hover { border-color: rgba(74,155,143,0.6); box-shadow: 0 8px 24px rgba(0,0,0,0.12); }
+
+    .chip-bold {
+      background: linear-gradient(135deg, var(--teal), #3a8478);
+      border-color: transparent;
+      color: #fff;
+      font-weight: 600;
+      padding: 0.65rem 1.2rem;
+      font-size: 0.82rem;
+    }
+    .chip-bold:hover { box-shadow: 0 8px 24px rgba(74,155,143,0.25); }
+
+    .chip-warm-bold {
+      background: linear-gradient(135deg, var(--warm), #a5553a);
+      border-color: transparent;
+      color: #fff;
+      font-weight: 600;
+      padding: 0.65rem 1.2rem;
+      font-size: 0.82rem;
+    }
+    .chip-warm-bold:hover { box-shadow: 0 8px 24px rgba(184,98,62,0.25); }
+
+    /* Large feature callouts mixed in */
+    .feat-callout {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      padding: 1rem 1.25rem;
+      border-radius: 16px;
+      backdrop-filter: blur(12px);
+      border: 1.5px solid;
+      width: 100%;
+      transition: transform 0.25s, box-shadow 0.25s;
+      cursor: default;
+    }
+
+    .feat-callout:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(0,0,0,0.06);
+    }
+
+    .callout-icon { font-size: 1.3rem; flex-shrink: 0; margin-top: 0.1rem; }
+
+    .callout-text h3 {
+      font-size: 0.88rem;
+      font-weight: 700;
+      margin-bottom: 0.2rem;
+    }
+
+    .callout-text p {
+      font-size: 0.75rem;
       line-height: 1.45;
     }
 
-    /* Span tiles for visual rhythm */
-    .tile-wide { grid-column: span 2; }
-
-    .tile-accent {
-      background: linear-gradient(135deg, rgba(74,155,143,0.08), rgba(74,155,143,0.02));
-      border-color: rgba(74,155,143,0.2);
+    .callout-teal {
+      background: linear-gradient(135deg, rgba(74,155,143,0.15), rgba(74,155,143,0.04));
+      border-color: rgba(74,155,143,0.25);
     }
+    .callout-teal .callout-text p { color: #3d6b63; }
 
-    .tile-warm-accent {
-      background: linear-gradient(135deg, rgba(184,98,62,0.06), rgba(184,98,62,0.02));
-      border-color: rgba(184,98,62,0.15);
+    .callout-dark {
+      background: linear-gradient(145deg, #2c3e3a, #1e2d29);
+      border-color: rgba(74,155,143,0.3);
+      color: #e8f0ee;
     }
+    .callout-dark .callout-text h3 { color: #a8ddd4; }
+    .callout-dark .callout-text p { color: #8fb5ad; }
 
     /* ── Bottom bar ── */
     .bottom-bar {
@@ -311,19 +407,15 @@
         height: auto;
       }
       .hero { padding: 8vh 2rem 4vh; }
-      .mosaic {
+      .features {
         padding: 1rem 1.5rem 2rem;
-        grid-template-columns: 1fr 1fr;
-        grid-template-rows: auto;
       }
-      .tile-wide { grid-column: span 2; }
       .bottom-features { display: none; }
       .notify-form { max-width: 100%; }
     }
 
     @media (max-width: 500px) {
-      .mosaic { grid-template-columns: 1fr; }
-      .tile-wide { grid-column: span 1; }
+      .feat-chip { font-size: 0.72rem; padding: 0.45rem 0.8rem; }
       .badge-row { flex-wrap: wrap; }
     }
   </style>
@@ -335,6 +427,7 @@
     <div class="orb orb-1"></div>
     <div class="orb orb-2"></div>
     <div class="orb orb-3"></div>
+    <div class="orb orb-4"></div>
     <div class="mesh"></div>
   </div>
 
@@ -345,11 +438,13 @@
       <img src="logo.png" alt="Calendoula" class="logo">
       <h1>Everything to run<br>your spa. <em>One&nbsp;platform.</em></h1>
       <p class="subtitle">Scheduling, client management, point of sale, marketing, staff tools, automations, and AI-powered insights — purpose-built for spas and wellness businesses.</p>
-      <form class="notify-form" onsubmit="return false;">
-        <input type="email" placeholder="you@yourspa.com" required>
-        <button type="submit">Notify Me</button>
+      <p class="notify-note">Invite only. <strong>$5/mo.</strong> Interested? Submit your info.</p>
+      <form class="notify-form" id="interest-form">
+        <input type="text" name="name" placeholder="Your name" required>
+        <input type="email" name="email" placeholder="you@yourspa.com" required>
+        <button type="submit">I'm Interested</button>
       </form>
-      <p class="notify-note">Be first in line. Launching soon.</p>
+      <p class="form-status" id="form-status"></p>
       <div class="badge-row">
         <span class="pill pill-warm">50+ Features</span>
         <span class="pill pill-teal">AI-Powered</span>
@@ -357,53 +452,62 @@
       </div>
     </div>
 
-    <!-- Right: Feature mosaic -->
-    <div class="mosaic">
-      <div class="tile">
-        <div class="tile-icon">&#x1f4c5;</div>
-        <h3>Smart Scheduling</h3>
-        <p>Online booking, recurring series, waitlists, multi-staff, and resource management.</p>
+    <!-- Right: Feature cloud -->
+    <div class="features">
+      <!-- AI callout -->
+      <div class="feat-callout callout-dark">
+        <span class="callout-icon">&#x1f916;</span>
+        <div class="callout-text">
+          <h3>AI-Powered Intelligence</h3>
+          <p>13 analysis types: churn prediction, scheduling optimization, staff coaching, revenue forecasting, and natural language booking assistant.</p>
+        </div>
       </div>
-      <div class="tile tile-accent">
-        <div class="tile-icon">&#x1f465;</div>
-        <h3>Client CRM &amp; Portal</h3>
-        <p>Full profiles, account balances, intake forms, referrals, and self-service portal.</p>
+
+      <!-- Scheduling + Clients cluster -->
+      <div class="feat-cluster">
+        <span class="feat-chip chip-bold"><span class="chip-icon">&#x1f4c5;</span> Smart Scheduling</span>
+        <span class="feat-chip chip-teal"><span class="chip-icon">&#x1f465;</span> Client CRM</span>
+        <span class="feat-chip chip-glass"><span class="chip-icon">&#x1f310;</span> Client Portal</span>
+        <span class="feat-chip chip-warm"><span class="chip-icon">&#x1f4b3;</span> Point of Sale</span>
+        <span class="feat-chip chip-teal"><span class="chip-icon">&#x1f381;</span> Gift Cards</span>
+        <span class="feat-chip chip-glass"><span class="chip-icon">&#x1f4e6;</span> Packages</span>
+        <span class="feat-chip chip-warm-bold"><span class="chip-icon">&#x26a1;</span> Automations</span>
+        <span class="feat-chip chip-dark"><span class="chip-icon">&#x1f4e7;</span> Email &amp; SMS Campaigns</span>
+        <span class="feat-chip chip-teal"><span class="chip-icon">&#x1f4ca;</span> 50+ Reports</span>
+        <span class="feat-chip chip-glass"><span class="chip-icon">&#x1f464;</span> Staff Management</span>
+        <span class="feat-chip chip-warm"><span class="chip-icon">&#x23f0;</span> Time Clock</span>
+        <span class="feat-chip chip-teal"><span class="chip-icon">&#x1f4b0;</span> Payroll</span>
+        <span class="feat-chip chip-glass"><span class="chip-icon">&#x1f4ac;</span> Team Chat</span>
+        <span class="feat-chip chip-dark"><span class="chip-icon">&#x1f3af;</span> Memberships</span>
+        <span class="feat-chip chip-warm"><span class="chip-icon">&#x1f4cb;</span> Intake Forms</span>
+        <span class="feat-chip chip-teal"><span class="chip-icon">&#x1f50d;</span> Inventory</span>
+        <span class="feat-chip chip-glass"><span class="chip-icon">&#x1f4e6;</span> Purchasing</span>
+        <span class="feat-chip chip-warm"><span class="chip-icon">&#x1f3b5;</span> Spotify</span>
+        <span class="feat-chip chip-teal"><span class="chip-icon">&#x1f393;</span> Training Mode</span>
+        <span class="feat-chip chip-dark"><span class="chip-icon">&#x1f6e1;</span> Permissions</span>
+        <span class="feat-chip chip-glass"><span class="chip-icon">&#x1f4c4;</span> Activity Log</span>
+        <span class="feat-chip chip-bold"><span class="chip-icon">&#x1f310;</span> Landing Pages</span>
+        <span class="feat-chip chip-warm"><span class="chip-icon">&#x2699;</span> Webhooks</span>
+        <span class="feat-chip chip-teal"><span class="chip-icon">&#x267f;</span> Accessibility</span>
+        <span class="feat-chip chip-glass"><span class="chip-icon">&#x1f4f1;</span> Mobile Checkout</span>
+        <span class="feat-chip chip-dark"><span class="chip-icon">&#x1f504;</span> Recurring Appointments</span>
+        <span class="feat-chip chip-warm"><span class="chip-icon">&#x1f4cd;</span> Multi-Location</span>
+        <span class="feat-chip chip-teal"><span class="chip-icon">&#x1f4ca;</span> AI Insights</span>
       </div>
-      <div class="tile tile-warm-accent tile-wide">
-        <div class="tile-icon">&#x1f916;</div>
-        <h3>AI-Powered Insights</h3>
-        <p>13 analysis types: scheduling advice, churn prediction, staff coaching, cancellation patterns, revenue forecasting, and natural language booking.</p>
-      </div>
-      <div class="tile">
-        <div class="tile-icon">&#x1f4b3;</div>
-        <h3>Point of Sale</h3>
-        <p>Services, products, gift cards, packages, memberships, tips, and mobile checkout links.</p>
-      </div>
-      <div class="tile tile-accent">
-        <div class="tile-icon">&#x1f4e7;</div>
-        <h3>Marketing &amp; Automations</h3>
-        <p>Email/SMS campaigns, 19 automation triggers, audience segmentation, and webhooks.</p>
-      </div>
-      <div class="tile tile-warm-accent">
-        <div class="tile-icon">&#x1f464;</div>
-        <h3>Staff Management</h3>
-        <p>Permissions, time clock, payroll, flex schedules, time off, documents, and org chart.</p>
-      </div>
-      <div class="tile tile-accent">
-        <div class="tile-icon">&#x1f4ca;</div>
-        <h3>50+ Reports</h3>
-        <p>Visual dashboards, 17 report sections, trend analysis, and CSV exports.</p>
-      </div>
-      <div class="tile tile-wide">
-        <div class="tile-icon">&#x1f381;</div>
-        <h3>Gift Cards, Packages &amp; Memberships</h3>
-        <p>Seasonal promotions, redemption tracking, recurring billing, and a full product &amp; inventory system with supplier management and AI invoice parsing.</p>
+
+      <!-- Scheduling callout -->
+      <div class="feat-callout callout-teal">
+        <span class="callout-icon">&#x1f4c5;</span>
+        <div class="callout-text">
+          <h3>Built for appointment-based businesses</h3>
+          <p>Online booking widget, recurring series, waitlists, multi-staff services, resource management, service capacity, and an AI concierge that books via natural language.</p>
+        </div>
       </div>
     </div>
 
     <!-- Bottom bar -->
     <div class="bottom-bar">
-      <span>&copy; 2026 Calendoula &middot; <a href="mailto:hello@getcalendoula.com">hello@getcalendoula.com</a></span>
+      <span>&copy; 2026 Calendoula</span>
       <div class="bottom-features">
         <span>Team Chat</span>
         <span>Training Mode</span>
@@ -417,5 +521,42 @@
 
   </div>
 
+  <script>
+    document.getElementById('interest-form').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const status = document.getElementById('form-status');
+      const btn = this.querySelector('button');
+      const name = this.querySelector('[name="name"]').value.trim();
+      const email = this.querySelector('[name="email"]').value.trim();
+
+      btn.disabled = true;
+      btn.textContent = 'Submitting...';
+      status.textContent = '';
+      status.className = 'form-status';
+
+      try {
+        const resp = await fetch('https://api.mycalendoula.com/platform/api/v1/interest/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, email }),
+        });
+        if (resp.ok) {
+          status.textContent = 'Thanks! We\'ll be in touch soon.';
+          status.className = 'form-status success';
+          this.reset();
+        } else {
+          const data = await resp.json().catch(() => ({}));
+          status.textContent = data.error || 'Something went wrong. Try again.';
+          status.className = 'form-status error';
+        }
+      } catch {
+        status.textContent = 'Could not connect. Try again later.';
+        status.className = 'form-status error';
+      }
+
+      btn.disabled = false;
+      btn.textContent = 'I\'m Interested';
+    });
+  </script>
 </body>
 </html>
