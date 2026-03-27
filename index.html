@@ -158,9 +158,60 @@
     /* Email capture */
     .notify-form {
       display: flex;
+      flex-direction: column;
       gap: 0.5rem;
       max-width: 460px;
       margin-bottom: 0.25rem;
+    }
+
+    .form-row {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .form-extra {
+      display: none;
+      flex-direction: column;
+      gap: 0.5rem;
+      animation: slideDown 0.25s ease-out;
+    }
+
+    .form-extra.visible {
+      display: flex;
+    }
+
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .form-extra input,
+    .form-extra textarea {
+      padding: 0.8rem 1.1rem;
+      border: 1.5px solid #d0c4b4;
+      border-radius: 8px;
+      background: var(--glass);
+      backdrop-filter: blur(8px);
+      font-size: 0.9rem;
+      font-family: inherit;
+      color: var(--text);
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .form-extra input:focus,
+    .form-extra textarea:focus { border-color: var(--warm); }
+
+    .form-extra input::placeholder,
+    .form-extra textarea::placeholder { color: #b0a393; }
+
+    .form-extra textarea {
+      resize: vertical;
+      min-height: 56px;
+    }
+
+    .field-error {
+      border-color: #c0392b !important;
     }
 
     .notify-form input {
@@ -460,9 +511,15 @@
       <p class="subtitle">Scheduling, client management, point of sale, marketing, staff tools, automations, and AI-powered insights — purpose-built for spas and wellness businesses.</p>
       <p class="notify-note">Invite only. <strong>$5/mo.*</strong> Interested? Submit your info.*</p>
       <form class="notify-form" id="interest-form">
-        <input type="text" name="name" placeholder="Your name" required>
-        <input type="email" name="email" placeholder="you@yourspa.com" required>
-        <button type="submit">I'm Interested</button>
+        <div class="form-row">
+          <input type="text" name="name" id="name-input" placeholder="Your name" required>
+          <input type="email" name="email" placeholder="you@yourspa.com" required>
+          <button type="submit">I'm Interested</button>
+        </div>
+        <div class="form-extra" id="form-extra">
+          <input type="tel" name="phone" placeholder="Phone number (optional)">
+          <textarea name="notes" placeholder="Tell us why you're interested (optional)" rows="2"></textarea>
+        </div>
       </form>
       <p class="form-status" id="form-status"></p>
       <div class="badge-row">
@@ -545,28 +602,78 @@
   </div>
 
   <script>
+    // Expand extra fields when name is populated
+    const nameInput = document.getElementById('name-input');
+    const formExtra = document.getElementById('form-extra');
+    nameInput.addEventListener('input', function() {
+      if (this.value.trim().length > 0) {
+        formExtra.classList.add('visible');
+      } else {
+        formExtra.classList.remove('visible');
+      }
+    });
+
+    // Phone validation helper
+    function cleanPhone(val) {
+      return val.replace(/[^0-9+]/g, '');
+    }
+    function isValidPhone(val) {
+      if (!val) return true; // optional
+      const digits = cleanPhone(val);
+      return digits.length >= 10 && digits.length <= 15;
+    }
+    function isValidEmail(val) {
+      return /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(val);
+    }
+
     document.getElementById('interest-form').addEventListener('submit', async function(e) {
       e.preventDefault();
       const status = document.getElementById('form-status');
       const btn = this.querySelector('button');
       const name = this.querySelector('[name="name"]').value.trim();
       const email = this.querySelector('[name="email"]').value.trim();
+      const phone = this.querySelector('[name="phone"]').value.trim();
+      const notes = this.querySelector('[name="notes"]').value.trim();
+
+      // Clear previous errors
+      this.querySelectorAll('.field-error').forEach(el => el.classList.remove('field-error'));
+      status.textContent = '';
+      status.className = 'form-status';
+
+      // Validate
+      let hasError = false;
+      if (!name) {
+        this.querySelector('[name="name"]').classList.add('field-error');
+        hasError = true;
+      }
+      if (!email || !isValidEmail(email)) {
+        this.querySelector('[name="email"]').classList.add('field-error');
+        status.textContent = !email ? 'Email is required.' : 'Please enter a valid email.';
+        status.className = 'form-status error';
+        hasError = true;
+      }
+      if (phone && !isValidPhone(phone)) {
+        this.querySelector('[name="phone"]').classList.add('field-error');
+        status.textContent = 'Please enter a valid phone number.';
+        status.className = 'form-status error';
+        hasError = true;
+      }
+      if (hasError) return;
 
       btn.disabled = true;
       btn.textContent = 'Submitting...';
-      status.textContent = '';
-      status.className = 'form-status';
 
       try {
         const resp = await fetch('https://api.mycalendoula.com/platform/api/v1/interest/', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ name, email }),
+          body: JSON.stringify({ name, email, phone: cleanPhone(phone), notes }),
         });
         if (resp.ok) {
           status.textContent = 'Thanks! We\'ll be in touch soon.';
           status.className = 'form-status success';
           this.reset();
+          formExtra.classList.remove('visible');
         } else {
           const data = await resp.json().catch(() => ({}));
           status.textContent = data.error || 'Something went wrong. Try again.';
