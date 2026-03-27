@@ -242,6 +242,21 @@
       flex-shrink: 0;
     }
 
+    .mobile-submit {
+      display: none;
+      padding: 0.8rem 1.4rem;
+      background: linear-gradient(135deg, var(--warm), #a5553a);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.88rem;
+      font-family: inherit;
+      cursor: pointer;
+      transition: transform 0.15s, box-shadow 0.2s;
+      box-shadow: 0 2px 8px rgba(184,98,62,0.25);
+    }
+
     .field-error {
       border-color: #c0392b !important;
     }
@@ -516,7 +531,8 @@
       .bottom-features { display: none; }
       .notify-form { max-width: 100%; }
       .form-row { flex-direction: column; }
-      .form-row button { order: 99; }
+      .form-row button { display: none; }
+      .mobile-submit { display: block !important; }
       .badge-row { flex-direction: column; align-items: flex-start; }
     }
 
@@ -558,6 +574,7 @@
             <span>Send me updates about Calendoula</span>
           </label>
         </div>
+        <button type="submit" class="mobile-submit">I'm Interested</button>
       </form>
       <p class="form-status" id="form-status"></p>
       <div class="badge-row">
